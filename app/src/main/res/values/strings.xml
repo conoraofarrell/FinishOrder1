@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">FinishOrder1</string>
+    <string name="imra_logo">IMRA Logo</string>
+    <string name="go">GO</string>
+    <string name="imra">IMRA</string>
+    <string name="finishorder">finishOrder</string>
+    <string name="time">time</string>
+    <string name="racenumber">raceNumber</string>
+</resources>
