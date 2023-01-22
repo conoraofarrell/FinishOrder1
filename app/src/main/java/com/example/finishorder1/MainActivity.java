@@ -8,6 +8,7 @@ import android.text.InputFilter;
 import android.text.method.DigitsKeyListener;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -32,28 +33,82 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public void addrow(View view) {
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        String currentDateandTime = sdf.format(new Date());
-
-
-        // Toast PopUp
-        Toast toast=Toast.makeText(getApplicationContext(),currentDateandTime,Toast.LENGTH_SHORT);
-        toast.setMargin(50,50);
-        toast.show();
-
-        // Add Table Row
+    public void buttonPress(View view) {
         TableLayout stk = (TableLayout) findViewById(R.id.tableLayout);
         int tableLength = stk.getChildCount();
         int rowCount = tableLength -1;
-        String finishOrder = Integer.toString(rowCount);
+        addrow(tableLength);
+    }
+
+    public void popupToast (int msg) {
+//         Toast PopUp
+        String message = Integer.toString(msg);
+        Toast toast=Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT);
+        toast.setMargin(50,50);
+        toast.show();
+    }
+
+    public void addrow(int rowIndex) {
+
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+//        String currentDateandTime = sdf.format(new Date());
+
+        // Toast PopUp
+//        Toast toast=Toast.makeText(getApplicationContext(),currentDateandTime,Toast.LENGTH_SHORT);
+//        toast.setMargin(50,50);
+//        toast.show();
+
+        // Add Table Row
+        TableLayout stk = (TableLayout) findViewById(R.id.tableLayout);
+        String finishOrder = "";
+        String currentDateandTime ="";
+
+        int rowCount = stk.getChildCount();
+        if ( rowIndex == rowCount ) {
+            finishOrder = Integer.toString(rowCount);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
+            currentDateandTime = sdf.format(new Date());
+        } else {
+            finishOrder = Integer.toString(rowIndex);
+            currentDateandTime = "NOTIME";
+//            addrow(rowIndex + 1);
+            appendrow_new(rowIndex);
+        }
+
 
         TableRow tbrow0 = new TableRow (this);
+        Button btn0 = new Button(this);
+        btn0.setText("+");
+        btn0.setTextColor(Color.BLACK);
+        btn0.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                addrow(stk.indexOfChild(tbrow0));
+//                v.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
+                // get table row index android.
+//                int nIndex = stk.indexOfChild(tbrow0);
+//                String fOrder = Integer.toString(nIndex);
+            }
+        });
+        tbrow0.addView(btn0);
         // Finish Order
         TextView tv0 = new TextView(this);
         tv0.setText(finishOrder);
         tv0.setTextColor(Color.BLACK);
+        tv0.setOnClickListener(v -> {
+                popupToast(stk.indexOfChild(tbrow0));
+////            addrow(view);
+//            v.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
+//            // get table row index android.
+//            int nIndex = stk.indexOfChild(tbrow0);
+//            String fOrder = Integer.toString(nIndex);
+//            // Toast PopUp for table row
+//            Toast toast1 =Toast.makeText(getApplicationContext(),fOrder,Toast.LENGTH_SHORT);
+//            toast1.setMargin(50,50);
+//            toast1.show();
+        });
         tbrow0.addView(tv0);
         // Finish Time
         TextView tv1 = new TextView(this);
@@ -72,10 +127,22 @@ public class MainActivity extends AppCompatActivity {
         tv2.setImeOptions(EditorInfo.IME_ACTION_DONE);
         tbrow0.addView(tv2);
 
-        stk.addView(tbrow0);
-
+        stk.addView(tbrow0,rowIndex);
 
     }
+
+    public void appendrow_new (int rowIndex) {
+        TableLayout stk = (TableLayout) findViewById(R.id.tableLayout);
+        TableRow t = (TableRow) stk.getChildAt(rowIndex);
+//        TextView firstTextView = (TextView) t.getChildAt(0);
+        TextView secondTextView = (TextView) t.getChildAt(1);
+        String oldnumber = (String) secondTextView.getText();
+        int oldnumberint = Integer.parseInt(oldnumber);
+        String numberstr = String.valueOf(oldnumberint + 1);
+        secondTextView.setText(numberstr);
+        // do a foreach number between rowindex and table length
+    }
+
 
 
 }

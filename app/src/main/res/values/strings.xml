@@ -1,9 +1,12 @@
-<resources>
-    <string name="app_name">FinishOrder1</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" tools:ignore="Typos">FinishOrder1</string>
     <string name="imra_logo">IMRA Logo</string>
     <string name="go">GO</string>
     <string name="imra">IMRA</string>
     <string name="finishorder">finishOrder</string>
     <string name="time">time</string>
     <string name="racenumber">raceNumber</string>
+    <string name="Add">add</string>
+    <string name="Remove">remove</string>
+    <string name="plus">+</string>
 </resources>
